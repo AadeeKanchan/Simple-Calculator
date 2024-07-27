@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Half copied half made by self</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1682100615199-5a90830ccbb3?q=80&w=3028&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .calculator {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        #display {
+            width: calc(100% - 40px);
+            align: center;
+            margin-bottom: 10px;
+            height: 40px;
+            font-size: 1.5em;
+            text-align: right;
+            padding: 5px;
+            background-color: transparent;
+            border: none;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .keys {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #000;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input id="display" type="text" readonly>
+        <div class="keys">
+            <button onclick="handleClick('AC')">AC</button>
+            <button onclick="handleClick('7')">7</button>
+            <button onclick="handleClick('8')">8</button>
+            <button onclick="handleClick('9')">9</button>
+            <button onclick="handleClick('/')">&#247;</button>
+            <button onclick="handleClick('4')">4</button>
+            <button onclick="handleClick('5')">5</button>
+            <button onclick="handleClick('6')">6</button>
+            <button onclick="handleClick('*')">&#215;</button>
+            <button onclick="handleClick('1')">1</button>
+            <button onclick="handleClick('2')">2</button>
+            <button onclick="handleClick('3')">3</button>
+            <button onclick="handleClick('-')">-</button>
+            <button onclick="handleClick('0')">0</button>
+            <button onclick="handleClick('.')">.</button>
+            <button onclick="calculateResult()">=</button>
+            <button onclick="handleClick('+')">+</button>
+            <button onclick="handleClick('Aadee')">Aadee</button>
+          
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        function handleClick(value) {
+            if (value === 'AC') {
+                clearDisplay();
+            } else {
+                appendToDisplay(value);
+            }
+        }
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function calculateResult() {
+            try {
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+
+        // Handle keyboard input
+        document.addEventListener('keydown', e => {
+            const key = e.key;
+            const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/','A','D','E','a','d','e', 'Enter', '=', 'Backspace', 'Escape'];
+
+            if (allowedKeys.includes(key)) {
+                e.preventDefault();
+                if (key === 'Enter' || key === '=') {
+                    calculateResult();
+                } else if (key === 'Backspace' || key === 'Escape') {
+                    clearDisplay();
+                } else {
+                    appendToDisplay(key);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
